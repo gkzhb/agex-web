@@ -2,6 +2,7 @@
   <v-app>
     <v-app-bar app color="primary" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <div>{{ title }}</div>
 
       <v-spacer></v-spacer>
     </v-app-bar>
@@ -18,6 +19,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "App",
 
@@ -26,6 +28,9 @@ export default {
   data: () => ({
     drawer: false,
     navList: []
-  })
+  }),
+  computed: {
+    ...mapState(["title"])
+  }
 };
 </script>
