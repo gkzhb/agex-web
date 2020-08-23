@@ -10,11 +10,13 @@ export default new Vuex.Store({
     title: ""
   },
   getters: {
-    loggedIn: () => {
-      return localStorage.token;
+    loggedIn: state => {
+      return (
+        state.token.length || (localStorage.token && localStorage.token.length)
+      );
     },
-    userId: () => {
-      return parseInt(localStorage.userId);
+    userId: state => {
+      return state.user.id || parseInt(localStorage.userId);
     },
     websiteTitle: state => {
       return state.title;
@@ -34,6 +36,7 @@ export default new Vuex.Store({
     },
     logout(state) {
       localStorage.token = "";
+      localStorage.userId = "";
       state.user = {};
     }
   },
