@@ -10,20 +10,15 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [13.x]
-
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - uses: borales/actions-yarn@v2.0.0
       with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install
+        cmd: install
     - run: echo 'agex.gkzhb.tk' > public/CNAME
-    - run: npm run update-public-data
-    - run: npm run build --if-present
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: build
     - name: deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
