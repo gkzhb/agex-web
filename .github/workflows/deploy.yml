@@ -20,7 +20,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-        persist-credentials: false
     - run: npm install
     - run: echo 'agex.gkzhb.tk' > public/CNAME
     - run: npm run update-public-data
