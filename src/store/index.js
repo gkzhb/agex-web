@@ -12,7 +12,8 @@ export default new Vuex.Store({
   getters: {
     loggedIn: state => {
       return (
-        state.token.length || (localStorage.token && localStorage.token.length)
+        state.token.length > 0 ||
+        (localStorage.token && localStorage.token.length > 0)
       );
     },
     userId: state => {
@@ -34,12 +35,17 @@ export default new Vuex.Store({
       localStorage.token = token;
       state.token = token;
     },
-    logout(state) {
-      localStorage.token = "";
-      localStorage.userId = "";
+    setLogout(state) {
       state.user = {};
+      state.token = "";
     }
   },
-  actions: {},
+  actions: {
+    logout({ commit }) {
+      localStorage.token = "";
+      localStorage.userId = "";
+      commit("setLogout");
+    }
+  },
   modules: {}
 });

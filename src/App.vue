@@ -7,12 +7,27 @@
       <v-spacer></v-spacer>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
-      <v-list nav>
-        <v-list-item v-for="item in navList" :key="item.title" :to="item.to">{{
-          item.title
-        }}</v-list-item>
-        <v-list-item v-if="loggedIn" @click="clickLogout">登出</v-list-item>
-        <v-list-item v-else :to="{ name: 'Login' }">登录</v-list-item>
+      <v-list nav dense flat>
+        <v-list-item-group v-model="group" color="primary">
+          <v-list-item v-for="item in navList" :key="item.title" :to="item.to">
+            <v-list-item-icon>
+              <v-icon v-text="item.icon" />
+            </v-list-item-icon>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+          <v-list-item :key="2" v-if="loggedIn" @click="clickLogout">
+            <v-list-item-icon>
+              <v-icon>mdi-account-arrow-right</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>登出</v-list-item-title>
+          </v-list-item>
+          <v-list-item :key="3" v-else :to="{ name: 'Login' }">
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>登录</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
 
@@ -23,28 +38,30 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   name: "App",
 
   components: {},
 
   data: () => ({
-    drawer: false
+    drawer: false,
+    group: 0
   }),
   computed: {
     ...mapState(["title"]),
     ...mapGetters(["loggedIn"]),
-    ...mapMutations(["logout"]),
     navList() {
       if (this.loggedIn) {
         return [
           {
             title: "收藏",
+            icon: "mdi-heart",
             to: { name: "Home" }
           },
           {
             title: "历史",
+            icon: "mdi-clock-fast",
             to: { name: "History" }
           }
         ];
@@ -54,6 +71,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["logout"]),
     clickLogout() {
       this.logout();
       this.$router.push({ name: "Login" });

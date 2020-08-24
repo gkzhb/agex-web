@@ -11,7 +11,8 @@ const routes = [
     name: "Home",
     component: Home,
     meta: {
-      title: "收藏"
+      title: "收藏",
+      auth: true
     }
   },
   {
@@ -20,7 +21,8 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "history" */ "../views/History.vue"),
     meta: {
-      title: "历史"
+      title: "历史",
+      auth: true
     }
   },
   {
@@ -39,6 +41,10 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  if (to.meta.auth && !store.getters.loggedIn) {
+    store.commit("setTitle", "登录");
+    next({ name: "Login" });
+  }
   if (to.meta.title) {
     store.commit("setTitle", to.meta.title);
     document.title = store.getters.websiteTitle;
