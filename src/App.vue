@@ -2,9 +2,7 @@
   <v-app>
     <v-app-bar app color="primary" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <div>{{ title }}</div>
-
-      <v-spacer></v-spacer>
+      <v-toolbar-title>{{ title }}</v-toolbar-title>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense flat>
@@ -32,7 +30,9 @@
     </v-navigation-drawer>
 
     <v-main>
-      <router-view />
+      <v-container fluid class="pa-0">
+        <router-view />
+      </v-container>
     </v-main>
   </v-app>
 </template>

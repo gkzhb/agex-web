@@ -55,6 +55,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     if (store.getters.loggedIn) {
+      store.commit("setTitle", "收藏");
       next({ name: "Home" });
     } else {
       next();

@@ -1,19 +1,20 @@
 <template>
   <v-container>
     <h2>我的收藏</h2>
-    <v-container>
+    <v-container class="pa-0">
       <v-row dense>
         <v-col v-for="item in favList" :key="item.id" xs="12" md="6" lg="4">
           <v-card :href="detailUrl + item.BangumiData.fanId">
             <v-container>
               <v-row justify="space-between">
-                <v-col cols="6">
+                <v-col cols="4">
                   <v-img :src="item.BangumiData.cover"> </v-img>
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="8" class="pl-0">
                   <v-card-title
                     v-text="item.BangumiData.name"
                     :to="detailUrl + item.BangumiData.fanId"
+                    class="pt-0"
                   />
                   <v-card-subtitle
                     class="pb-0"
@@ -26,7 +27,7 @@
                     v-text="item.BangumiData.description"
                   >
                   </v-card-text>
-                  <v-card-actions>
+                  <v-card-text class="py-0">
                     <v-btn
                       text
                       color="primary"
@@ -34,7 +35,7 @@
                       v-text="'继续看' + item.lastPos"
                       :href="item.lastUrl + '&' + item.lastTime"
                     />
-                  </v-card-actions>
+                  </v-card-text>
                 </v-col>
               </v-row>
             </v-container>

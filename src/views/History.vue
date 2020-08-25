@@ -1,19 +1,20 @@
 <template>
   <v-container>
     <h2>我的历史</h2>
-    <v-container>
+    <v-container class="pa-0">
       <v-row dense>
         <v-col v-for="item in hisList" :key="item.id" xs="12" md="6" lg="4">
           <v-card :href="detailUrl + item.fanId">
             <v-container>
               <v-row justify="space-between">
-                <v-col cols="6">
+                <v-col cols="4">
                   <v-img :src="item.cover"> </v-img>
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="8" class="pl-0">
                   <v-card-title
                     v-text="item.name"
                     :to="detailUrl + item.fanId"
+                    class="pt-0"
                   />
                   <v-card-subtitle class="pb-0"
                     >看到
@@ -26,22 +27,16 @@
                   >
                   <v-card-text class="text--primary" v-text="item.description">
                   </v-card-text>
-                  <v-card-actions>
-                    <v-row>
-                      <v-col>
-                        <v-btn
-                          text
-                          color="primary"
-                          v-if="item.lastTime"
-                          v-text="'继续看' + item.lastPos"
-                          :href="item.lastUrl + '&' + item.lastTime"
-                        />
-                      </v-col>
-                      <v-col>
-                        <v-btn text disabled v-text="'更新到 ' + item.other" />
-                      </v-col>
-                    </v-row>
-                  </v-card-actions>
+                  <v-card-text class="py-0">
+                    <v-btn
+                      text
+                      color="primary"
+                      v-if="item.lastTime"
+                      v-text="'继续看' + item.lastPos"
+                      :href="item.lastUrl + '&' + item.lastTime"
+                    />
+                    <v-btn text disabled v-text="'更新到 ' + item.other" />
+                  </v-card-text>
                 </v-col>
               </v-row>
             </v-container>
