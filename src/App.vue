@@ -11,7 +11,12 @@
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense flat>
         <v-list-item-group v-model="group" color="primary">
-          <v-list-item v-for="item in navList" :key="item.title" :to="item.to">
+          <v-list-item
+            v-for="item in navList"
+            :key="item.title"
+            :to="item.to"
+            exact
+          >
             <v-list-item-icon>
               <v-icon v-text="item.icon" />
             </v-list-item-icon>
