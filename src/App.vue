@@ -3,6 +3,10 @@
     <v-app-bar app color="primary" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
+      <v-spacer />
+      <v-btn icon @click="setDarkMode()">
+        <v-icon v-text="dark ? 'mdi-power-sleep' : 'mdi-weather-sunny'" />
+      </v-btn>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense flat>
@@ -30,9 +34,7 @@
     </v-navigation-drawer>
 
     <v-main>
-      <v-container fluid class="pa-0">
-        <router-view />
-      </v-container>
+      <router-view />
     </v-main>
   </v-app>
 </template>
@@ -46,16 +48,21 @@ export default {
 
   data: () => ({
     drawer: false,
-    group: 0
+    group: 0,
+    dark: false
   }),
+  created() {
+    this.dark = this.darkMode;
+    this.$vuetify.theme.dark = this.darkMode;
+  },
   computed: {
     ...mapState(["title"]),
-    ...mapGetters(["loggedIn"]),
+    ...mapGetters(["loggedIn", "darkMode"]),
     navList() {
       if (this.loggedIn) {
         return [
           {
-            title: "收藏",
+            title: "追番",
             icon: "mdi-heart",
             to: { name: "Home" }
           },
@@ -75,6 +82,11 @@ export default {
     clickLogout() {
       this.logout();
       this.$router.push({ name: "Login" });
+    },
+    setDarkMode() {
+      this.dark = !this.dark;
+      this.$vuetify.theme.dark = this.dark;
+      this.$store.commit("setDarkMode", this.dark);
     }
   }
 };

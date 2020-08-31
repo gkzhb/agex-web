@@ -1,48 +1,55 @@
 <template>
-  <v-container>
-    <h2>我的收藏</h2>
-    <v-container class="pa-0">
-      <v-row dense>
-        <v-col v-for="item in favList" :key="item.id" xs="12" md="6" lg="4">
-          <v-card :href="detailUrl + item.BangumiData.fanId">
-            <v-container>
-              <v-row justify="space-between">
-                <v-col cols="4">
-                  <v-img :src="item.BangumiData.cover"> </v-img>
-                </v-col>
-                <v-col cols="8" class="pl-0">
-                  <v-card-title
-                    v-text="item.BangumiData.name"
-                    :to="detailUrl + item.BangumiData.fanId"
-                    class="pt-0"
-                  />
-                  <v-card-subtitle
-                    class="pb-0"
-                    v-text="
-                      item.BangumiData.region + ' | ' + item.BangumiData.state
-                    "
-                  />
-                  <v-card-text
-                    class="text--primary des"
-                    v-text="item.BangumiData.description"
-                  >
-                  </v-card-text>
-                  <v-card-text class="py-0">
-                    <v-btn
-                      text
-                      color="primary"
-                      v-if="item.lastTime"
-                      v-text="'继续看' + item.lastPos"
-                      :href="item.lastUrl + '&' + item.lastTime"
-                    />
-                  </v-card-text>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
+  <v-container fluid>
+    <v-row class="mt-2">
+      <v-col>
+        <h2>我的追番</h2>
+      </v-col>
+    </v-row>
+    <v-row dense>
+      <v-col
+        v-for="item in favList"
+        cols="12"
+        :key="item.id"
+        sm="12"
+        md="6"
+        lg="4"
+      >
+        <v-card :href="detailUrl + item.BangumiData.fanId">
+          <v-row justify="space-between">
+            <v-col cols="4">
+              <v-img width="100%" :src="item.BangumiData.cover"> </v-img>
+            </v-col>
+            <v-col cols="8" class="pl-0">
+              <v-card-title
+                v-text="item.BangumiData.name"
+                :to="detailUrl + item.BangumiData.fanId"
+                class="pt-0"
+              />
+              <v-card-subtitle
+                class="pb-0"
+                v-text="
+                  item.BangumiData.region + ' | ' + item.BangumiData.state
+                "
+              />
+              <v-card-text
+                class="text--primary des"
+                v-text="item.BangumiData.description"
+              >
+              </v-card-text>
+              <v-card-text class="py-0">
+                <v-btn
+                  text
+                  color="primary"
+                  v-if="item.lastTime"
+                  v-text="'继续看' + item.lastPos"
+                  :href="item.lastUrl + '&' + item.lastTime"
+                />
+              </v-card-text>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

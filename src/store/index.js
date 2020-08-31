@@ -21,6 +21,9 @@ export default new Vuex.Store({
     },
     websiteTitle: state => {
       return state.title;
+    },
+    darkMode: state => {
+      return state.darkMode || localStorage.darkMode === "true";
     }
   },
   mutations: {
@@ -38,6 +41,11 @@ export default new Vuex.Store({
     setLogout(state) {
       state.user = {};
       state.token = "";
+    },
+    setDarkMode(state, dark) {
+      console.log("setDarkMode", dark);
+      state.darkMode = dark;
+      localStorage.darkMode = dark;
     }
   },
   actions: {

@@ -11,7 +11,7 @@ const routes = [
     name: "Home",
     component: Home,
     meta: {
-      title: "收藏",
+      title: "追番",
       auth: true
     }
   },
