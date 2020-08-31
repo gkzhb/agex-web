@@ -20,6 +20,22 @@ export async function login(data) {
   });
 }
 
+export async function register(data) {
+  return new Promise((resolve, reject) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    };
+    axios
+      .post("/users/register", qs.stringify(data), config)
+      .then(resp => {
+        resolve(resp.data);
+      })
+      .catch(err => reject(err));
+  });
+}
+
 export async function getFavoriteList() {
   return new Promise((resolve, reject) => {
     axios

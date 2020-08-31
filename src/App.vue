@@ -28,12 +28,20 @@
             </v-list-item-icon>
             <v-list-item-title>登出</v-list-item-title>
           </v-list-item>
-          <v-list-item :key="3" v-else :to="{ name: 'Login' }">
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>登录</v-list-item-title>
-          </v-list-item>
+          <template v-else>
+            <v-list-item :key="3" :to="{ name: 'Login' }">
+              <v-list-item-icon>
+                <v-icon>mdi-account</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>登录</v-list-item-title>
+            </v-list-item>
+            <v-list-item :key="4" :to="{ name: 'Register' }">
+              <v-list-item-icon>
+                <v-icon>mdi-account-plus</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>注册</v-list-item-title>
+            </v-list-item>
+          </template>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>

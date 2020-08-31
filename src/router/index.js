@@ -33,6 +33,15 @@ const routes = [
     meta: {
       title: "登录"
     }
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/Register.vue"),
+    meta: {
+      title: "注册"
+    }
   }
 ];
 

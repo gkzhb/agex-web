@@ -23,7 +23,18 @@
             @click:append="showPassword = !showPassword"
             :rules="[password => !!password || '密码为空']"
           ></v-text-field>
-          <v-btn color="primary" large @click="clickLogin">登录</v-btn>
+          <v-btn
+            class="mt-2"
+            width="100%"
+            color="primary"
+            large
+            @click="clickLogin"
+            >登录</v-btn
+          >
+          <div class="text--secondary mt-4">
+            没有帐号？
+            <router-link :to="{ name: 'Register' }">来注册一个吧！</router-link>
+          </div>
         </v-form>
       </v-col>
     </v-row>
