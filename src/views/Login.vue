@@ -42,7 +42,6 @@
 </template>
 <script>
 import { login } from "../utils/api";
-import store from "../store";
 export default {
   data() {
     return {
@@ -57,19 +56,16 @@ export default {
   methods: {
     clickLogin() {
       if (this.$refs.loginForm.validate()) {
-        login(this.loginForm).then(() => {
-          console.log("登录成功");
-          this.$router.push({ name: "Home" });
-        });
+        login(this.loginForm)
+          .then(res => {
+            console.log("登录成功", res.message);
+            this.$store.dispatch("message/success", res.message);
+            this.$router.push({ name: "Home" });
+          })
+          .catch(err => {
+            console.log("登录失败", err.message);
+          });
       }
-    }
-  },
-  beforeRouteEnter(to, from, next) {
-    if (store.getters.loggedIn) {
-      store.commit("setTitle", "收藏");
-      next({ name: "Home" });
-    } else {
-      next();
     }
   }
 };

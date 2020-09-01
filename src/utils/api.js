@@ -12,9 +12,14 @@ export async function login(data) {
     axios
       .post("/users/login", qs.stringify(data), config)
       .then(resp => {
-        store.commit("setToken", resp.data.token);
-        store.commit("setUser", resp.data.data);
-        resolve(resp.data);
+        console.log("login result:", resp.data);
+        if (resp.data.success) {
+          store.commit("setToken", resp.data.token);
+          store.commit("setUser", resp.data.data);
+          resolve(resp.data);
+        } else {
+          reject(resp.data);
+        }
       })
       .catch(err => reject(err));
   });

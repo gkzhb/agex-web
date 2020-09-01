@@ -42,6 +42,9 @@ _axios.interceptors.response.use(
   function(response) {
     // Do something with response data
     console.log(response);
+    if (response.data.success === false && response.data.message) {
+      store.dispatch("message/error", response.data.message);
+    }
     return response;
   },
   function(error) {
@@ -51,6 +54,11 @@ _axios.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           store.commit("logout");
+          store.dispatch("info", "登录超时，请重新登录！");
+          break;
+      }
+      if (error.response.message) {
+        store.dispatch("error", error.response.message);
       }
     }
     return Promise.reject(error);

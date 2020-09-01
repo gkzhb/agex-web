@@ -73,8 +73,9 @@ export default {
   methods: {
     clickReg() {
       if (this.$refs.regForm.validate()) {
-        register(this.regForm).then(() => {
+        register(this.regForm).then(res => {
           console.log("注册成功");
+          this.$store.dispatch("message/success", res.message);
           this.$router.push({ name: "Login" });
         });
       }

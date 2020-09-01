@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import message from "./message.store";
 
 Vue.use(Vuex);
 
@@ -55,5 +56,7 @@ export default new Vuex.Store({
       commit("setLogout");
     }
   },
-  modules: {}
+  modules: {
+    message
+  }
 });

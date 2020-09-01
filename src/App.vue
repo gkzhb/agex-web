@@ -48,17 +48,20 @@
 
     <v-main>
       <router-view />
+      <message ref="message" />
     </v-main>
   </v-app>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
+import Vue from "vue";
+import Message from "./components/Message";
 export default {
   name: "App",
-
-  components: {},
-
+  components: {
+    Message
+  },
   data: () => ({
     drawer: false,
     group: 0,
@@ -67,6 +70,7 @@ export default {
   created() {
     this.dark = this.darkMode;
     this.$vuetify.theme.dark = this.darkMode;
+    Vue.prototype.$message = this.$refs.message;
   },
   computed: {
     ...mapState(["title"]),
