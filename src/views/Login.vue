@@ -6,7 +6,6 @@
         <v-form
           ref="loginForm"
           v-model="valid"
-          @submit="logEvent"
           @keyup.native.enter="clickLogin"
         >
           <v-text-field
@@ -71,9 +70,6 @@ export default {
             console.log("登录失败", err.message);
           });
       }
-    },
-    logEvent(event) {
-      console.log(event);
     }
   }
 };
