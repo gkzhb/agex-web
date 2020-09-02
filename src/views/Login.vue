@@ -3,7 +3,12 @@
     <v-row class="v-flex" justify="center">
       <v-col lg="4" md="6" sm="9" xs="12">
         <h2>登录</h2>
-        <v-form ref="loginForm" v-model="valid">
+        <v-form
+          ref="loginForm"
+          v-model="valid"
+          @submit="logEvent"
+          @keyup.native.enter="clickLogin"
+        >
           <v-text-field
             id="username"
             v-model="loginForm.username"
@@ -66,6 +71,9 @@ export default {
             console.log("登录失败", err.message);
           });
       }
+    },
+    logEvent(event) {
+      console.log(event);
     }
   }
 };

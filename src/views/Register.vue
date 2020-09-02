@@ -3,7 +3,7 @@
     <v-row class="v-flex" justify="center">
       <v-col lg="4" md="6" sm="9" xs="12">
         <h2>注册</h2>
-        <v-form ref="regForm" v-model="valid">
+        <v-form ref="regForm" v-model="valid" @keyup.native.enter="clickReg">
           <v-text-field
             id="username"
             v-model="regForm.username"
