@@ -3,11 +3,7 @@
     <v-row class="v-flex" justify="center">
       <v-col lg="4" md="6" sm="9" xs="12">
         <h2>登录</h2>
-        <v-form
-          ref="loginForm"
-          v-model="valid"
-          @keyup.native.enter="clickLogin"
-        >
+        <v-form ref="loginForm" v-model="valid" @submit="submit">
           <v-text-field
             id="username"
             v-model="loginForm.username"
@@ -27,12 +23,7 @@
             @click:append="showPassword = !showPassword"
             :rules="[password => !!password || '密码为空']"
           ></v-text-field>
-          <v-btn
-            class="mt-2"
-            width="100%"
-            color="primary"
-            large
-            @click="clickLogin"
+          <v-btn class="mt-2" width="100%" color="primary" large type="submit"
             >登录</v-btn
           >
           <div class="text--secondary mt-4">
@@ -70,6 +61,10 @@ export default {
             console.log("登录失败", err.message);
           });
       }
+    },
+    submit(e) {
+      e.preventDefault();
+      this.clickLogin();
     }
   }
 };

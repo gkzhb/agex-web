@@ -3,7 +3,7 @@
     <v-row class="v-flex" justify="center">
       <v-col lg="4" md="6" sm="9" xs="12">
         <h2>注册</h2>
-        <v-form ref="regForm" v-model="valid" @keyup.native.enter="clickReg">
+        <v-form ref="regForm" v-model="valid" @submit="submit">
           <v-text-field
             id="username"
             v-model="regForm.username"
@@ -37,12 +37,7 @@
             @click:append="showPasswordAgain = !showPasswordAgain"
             :rules="rules"
           ></v-text-field>
-          <v-btn
-            class="mt-2"
-            width="100%"
-            color="primary"
-            large
-            @click="clickReg"
+          <v-btn class="mt-2" width="100%" color="primary" large type="submit"
             >注册</v-btn
           >
         </v-form>
@@ -79,6 +74,10 @@ export default {
           this.$router.push({ name: "Login" });
         });
       }
+    },
+    submit(e) {
+      e.preventDefault();
+      this.clickReg();
     },
     passwordConfirmationRule() {
       return (
