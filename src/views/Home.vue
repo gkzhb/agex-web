@@ -15,7 +15,7 @@
         lg="4"
       >
         <v-card :href="detailUrl + item.BangumiData.fanId">
-          <v-row justify="space-between">
+          <v-row justify="space-between" class="pa-3">
             <v-col cols="4">
               <v-img width="100%" :src="item.BangumiData.cover"> </v-img>
             </v-col>
