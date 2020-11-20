@@ -8,7 +8,7 @@
         <v-icon v-text="dark ? 'mdi-power-sleep' : 'mdi-weather-sunny'" />
       </v-btn>
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer" absolute temporary>
+    <v-navigation-drawer v-model="drawer" app temporary>
       <v-list nav dense flat>
         <v-list-item-group v-model="group" color="primary">
           <v-list-item
