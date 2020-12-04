@@ -27,7 +27,7 @@ export default {
     show: false,
     content: "",
     color: "",
-    timeout: 0,
+    timeout: -1,
     queue: []
   }),
   created() {

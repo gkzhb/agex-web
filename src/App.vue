@@ -10,7 +10,8 @@
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" app temporary>
       <v-list nav dense flat>
-        <v-list-item-group v-model="group" color="primary">
+        <h3 class="my-2 ml-2" v-text="loggedIn ? username : '游客'" />
+        <v-list-item-group v-model="group" color="primary" disabled>
           <v-list-item
             v-for="item in navList"
             :key="item.title"
@@ -74,7 +75,7 @@ export default {
   },
   computed: {
     ...mapState(["title"]),
-    ...mapGetters(["loggedIn", "darkMode"]),
+    ...mapGetters(["loggedIn", "darkMode", "username"]),
     navList() {
       if (this.loggedIn) {
         return [

@@ -20,6 +20,9 @@ export default new Vuex.Store({
     userId: state => {
       return state.user.id || parseInt(localStorage.userId);
     },
+    username: state => {
+      return state.user.username || localStorage.username;
+    },
     websiteTitle: state => {
       return state.title;
     },
@@ -31,6 +34,7 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user;
       localStorage.userId = user.id;
+      localStorage.username = user.username;
     },
     setTitle(state, title) {
       state.title = title;
