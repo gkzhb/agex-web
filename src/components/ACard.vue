@@ -2,7 +2,9 @@
   <v-card>
     <v-row justify="space-between">
       <v-col cols="4" class="d-flex align-center">
-        <v-img class="ma-3" width="100%" :src="anime.cover"> </v-img>
+        <a :href="detailUrl + anime.fanId" target="_blank" class="full_wid">
+          <v-img class="ma-3" width="100%" :src="anime.cover"></v-img>
+        </a>
       </v-col>
       <v-col cols="8" class="pl-0 d-flex flex-column">
         <div class="mb-auto">
@@ -45,6 +47,8 @@ export default {
 };
 </script>
 <style lang="sass" scoped>
+.full_wid
+  width: 100%
 .anime_title_text
   display: -webkit-box
   overflow: hidden
