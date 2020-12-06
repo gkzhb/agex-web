@@ -4,6 +4,9 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer />
+      <v-btn icon href="https://github.com/gkzhb/agex-web" target="_blank">
+        <v-icon>mdi-github</v-icon>
+      </v-btn>
       <v-btn icon @click="setDarkMode()">
         <v-icon v-text="dark ? 'mdi-power-sleep' : 'mdi-weather-sunny'" />
       </v-btn>
