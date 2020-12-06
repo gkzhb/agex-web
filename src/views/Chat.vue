@@ -42,6 +42,9 @@
         <a-topic :key="idx" :topic="topic" />
       </template>
     </v-list>
+    <div class="text-center">
+      <v-pagination v-model="page" :length="total" circle @input="changePage" />
+    </div>
   </v-container>
 </template>
 <script>
@@ -56,12 +59,17 @@ export default {
   data: () => ({
     topicDialog: false,
     topicContent: "",
-    chatList: []
+    chatList: [],
+    total: 0,
+    page: 1
   }),
   methods: {
-    getChatTopics() {
-      getChatTopicList(1).then(resp => {
+    getChatTopics(page = 1) {
+      getChatTopicList(page).then(resp => {
         this.chatList = resp.articles.rows;
+        this.total = Math.ceil(
+          resp.pagination.total / resp.pagination.pageSize
+        );
       });
     },
     toDate(t) {
@@ -78,6 +86,9 @@ export default {
           this.$store.dispatch("message/success", "主题创建成功");
         });
       }
+    },
+    changePage(page) {
+      this.getChatTopics(page);
     }
   },
   created() {
