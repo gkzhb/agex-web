@@ -62,3 +62,48 @@ export async function getHistoryList() {
       .catch(err => reject(err));
   });
 }
+
+export async function getChatTopicList(page = 1) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post("/articles/list", {
+        userId: store.getters.userId,
+        currentPage: page
+      })
+      .then(resp => {
+        resolve(resp.data);
+      })
+      .catch(err => reject(err));
+  });
+}
+
+export async function createReply(id, content) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post("/comment/create", {
+        userId: store.getters.userId,
+        userName: store.getters.username,
+        articleId: id,
+        content: content
+      })
+      .then(resp => {
+        resolve(resp.data);
+      })
+      .catch(err => reject(err));
+  });
+}
+
+export async function createTopic(content) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post("/articles/create", {
+        userId: store.getters.userId,
+        userName: store.getters.username,
+        content: content
+      })
+      .then(resp => {
+        resolve(resp.data);
+      })
+      .catch(err => reject(err));
+  });
+}

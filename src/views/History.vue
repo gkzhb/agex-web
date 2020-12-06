@@ -44,7 +44,7 @@
 <script>
 import { getHistoryList } from "../utils/api";
 import { AGE_DETAIL_URL } from "../utils/config";
-import dayjs from "../plugins/dayjs";
+import { fromNow } from "../utils/others";
 import ACard from "@/components/ACard";
 
 export default {
@@ -64,8 +64,7 @@ export default {
       });
     },
     toDate(t) {
-      const dt = dayjs(t);
-      return dt.fromNow() + " " + dt.format("HH:mm:ss");
+      return fromNow(t);
     }
   },
   computed: {

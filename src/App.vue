@@ -88,6 +88,11 @@ export default {
             title: "历史",
             icon: "mdi-clock-fast",
             to: { name: "History" }
+          },
+          {
+            title: "交流",
+            icon: "mdi-chat-processing",
+            to: { name: "Chat" }
           }
         ];
       } else {

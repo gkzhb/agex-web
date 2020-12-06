@@ -26,6 +26,16 @@ const routes = [
     }
   },
   {
+    path: "/chat",
+    name: "Chat",
+    component: () =>
+      import(/* webpackChunkName: "history" */ "../views/Chat.vue"),
+    meta: {
+      title: "交流区",
+      auth: true
+    }
+  },
+  {
     path: "/login",
     name: "Login",
     component: () =>
