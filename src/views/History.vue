@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mb-12">
     <v-row class="mt-2">
       <v-col>
         <h2>我的历史</h2>
@@ -38,6 +38,7 @@
         </a-card>
       </v-col>
     </v-row>
+    <to-top-fab />
   </v-container>
 </template>
 
@@ -46,11 +47,13 @@ import { getHistoryList } from "../utils/api";
 import { AGE_DETAIL_URL } from "../utils/config";
 import { fromNow } from "../utils/others";
 import ACard from "@/components/ACard";
+import ToTopFab from "../components/ToTopFab";
 
 export default {
   name: "History",
   components: {
-    ACard
+    ACard,
+    ToTopFab
   },
   data() {
     return {

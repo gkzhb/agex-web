@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mb-12">
     <v-dialog v-model="topicDialog" persistent>
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" fab fixed bottom right v-on="on" v-bind="attrs">
@@ -45,16 +45,19 @@
     <div class="text-center my-4">
       <v-pagination v-model="page" :length="total" circle @input="changePage" />
     </div>
+    <to-top-fab :bottom="false" />
   </v-container>
 </template>
 <script>
 import { getChatTopicList, createTopic } from "../utils/api";
 import { fromNow } from "../utils/others";
 import ATopic from "../components/ATopic";
+import ToTopFab from "../components/ToTopFab";
 
 export default {
   components: {
-    ATopic
+    ATopic,
+    ToTopFab
   },
   data: () => ({
     topicDialog: false,

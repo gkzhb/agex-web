@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mb-12">
     <v-row class="mt-2">
       <v-col>
         <h2>我的追番</h2>
@@ -35,6 +35,7 @@
         </a-card>
       </v-col>
     </v-row>
+    <to-top-fab />
   </v-container>
 </template>
 
@@ -42,10 +43,13 @@
 import { getFavoriteList } from "../utils/api";
 import { AGE_DETAIL_URL } from "../utils/config";
 import ACard from "@/components/ACard";
+import ToTopFab from "../components/ToTopFab";
+
 export default {
   name: "Home",
   components: {
-    ACard
+    ACard,
+    ToTopFab
   },
   data() {
     return {
