@@ -14,7 +14,7 @@
         </div>
       </div>
       <div v-show="showReply" class="mt-2">
-        <div class="d-flex justify-space-between">
+        <div class="mb-2 d-flex justify-space-between">
           <div class="flex-grow-1">
             <v-text-field
               v-model="replyContent"
@@ -32,7 +32,7 @@
         </div>
         <v-list class="pl-4">
           <template v-for="(reply, i) in topic.Comments">
-            <v-divider v-if="i != 0" :key="'d' + i" />
+            <v-divider :key="'d' + i" />
             <v-list-item :key="i">
               <v-list-item-content>
                 <div class="chat_content" v-html="reply.content" />
@@ -80,6 +80,12 @@ export default {
       } else {
         this.$store.dispatch("message/error", "回复内容不能为空");
       }
+    }
+  },
+  watch: {
+    "topic.id"() {
+      // hide replies when paging
+      this.showReply = false;
     }
   }
 };

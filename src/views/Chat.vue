@@ -101,6 +101,7 @@ export default {
   max-width: 70% !important
 .chat_content
   max-width: 100% !important
+  line-height: 1.5
   word-break: break-all
 .chat_content iframe
   max-width: 100% !important

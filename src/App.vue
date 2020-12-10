@@ -96,6 +96,11 @@ export default {
             title: "交流",
             icon: "mdi-chat-processing",
             to: { name: "Chat" }
+          },
+          {
+            title: "关于",
+            icon: "mdi-information",
+            to: { name: "About" }
           }
         ];
       } else {

@@ -28,8 +28,7 @@ const routes = [
   {
     path: "/chat",
     name: "Chat",
-    component: () =>
-      import(/* webpackChunkName: "history" */ "../views/Chat.vue"),
+    component: () => import(/* webpackChunkName: "chat" */ "../views/Chat.vue"),
     meta: {
       title: "交流区",
       auth: true
@@ -51,6 +50,15 @@ const routes = [
       import(/* webpackChunkName: "register" */ "../views/Register.vue"),
     meta: {
       title: "注册"
+    }
+  },
+  {
+    path: "/about",
+    name: "About",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    meta: {
+      title: "关于"
     }
   }
 ];
