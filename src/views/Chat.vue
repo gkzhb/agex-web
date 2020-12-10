@@ -42,7 +42,7 @@
         <a-topic :key="idx" :topic="topic" />
       </template>
     </v-list>
-    <div class="text-center">
+    <div class="text-center my-4">
       <v-pagination v-model="page" :length="total" circle @input="changePage" />
     </div>
   </v-container>
@@ -101,6 +101,7 @@ export default {
   max-width: 70% !important
 .chat_content
   max-width: 100% !important
+  word-break: break-all
 .chat_content iframe
   max-width: 100% !important
 </style>
