@@ -62,9 +62,10 @@ export default {
         this.content = msg.content;
         this.color = msg.color;
         this.timeout = msg.timeout;
-        setTimeout(() => {
+        this.show = false;
+        this.$nextTick(() => {
           this.show = true;
-        }, 1);
+        });
       }
     },
     logState() {

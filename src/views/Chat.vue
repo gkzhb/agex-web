@@ -88,6 +88,8 @@ export default {
         createTopic(this.topicContent).then(() => {
           this.$store.dispatch("message/success", "主题创建成功");
         });
+      } else {
+        this.$store.dispatch("message/error", "主题内容不能为空");
       }
     },
     changePage(page) {
