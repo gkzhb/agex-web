@@ -24,7 +24,7 @@
             name="Password"
             label="密码"
             @click:append="showPassword = !showPassword"
-            :rules="rules"
+            :rules="passwordRules"
           ></v-text-field>
           <v-text-field
             id="passwordAgain"
@@ -32,10 +32,10 @@
             :append-icon="showPasswordAgain ? 'mdi-eye' : 'mdi-eye-off'"
             :type="showPasswordAgain ? 'text' : 'password'"
             prepend-icon="mdi-lock"
-            name="Password"
+            name="PasswordAgain"
             label="再次输入密码"
             @click:append="showPasswordAgain = !showPasswordAgain"
-            :rules="rules"
+            :rules="passwordAgainRules"
           ></v-text-field>
           <v-btn class="mt-2" width="100%" color="primary" large type="submit"
             >注册</v-btn
@@ -58,20 +58,21 @@ export default {
       },
       showPassword: false,
       showPasswordAgain: false,
-      rules: [
+      passwordRules: [
         password => !!password || "密码为空",
-        password => password.length >= 5 || "密码不能少于5个字符",
-        this.passwordConfirmationRule
-      ]
+        password => password.length >= 5 || "密码不能少于5个字符"
+      ],
+      passwordAgainRules: [this.passwordConfirmationRule]
     };
   },
   methods: {
     clickReg() {
       if (this.$refs.regForm.validate()) {
         register(this.regForm).then(res => {
-          console.log("注册成功");
-          this.$store.dispatch("message/success", res.message);
-          this.$router.push({ name: "Login" });
+          if (res.success) {
+            this.$store.dispatch("message/success", res.message);
+            this.$router.push({ name: "Login" });
+          }
         });
       }
     },
