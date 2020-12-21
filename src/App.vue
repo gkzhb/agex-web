@@ -61,6 +61,7 @@
 import { mapState, mapGetters, mapActions } from "vuex";
 import Vue from "vue";
 import Message from "./components/Message";
+import { sidebarRoutes } from "./utils/constant";
 export default {
   name: "App",
   components: {
@@ -82,29 +83,13 @@ export default {
     navList() {
       if (this.loggedIn) {
         return [
-          {
-            title: "追番",
-            icon: "mdi-heart",
-            to: { name: "Home" }
-          },
-          {
-            title: "历史",
-            icon: "mdi-clock-fast",
-            to: { name: "History" }
-          },
-          {
-            title: "交流",
-            icon: "mdi-chat-processing",
-            to: { name: "Chat" }
-          },
-          {
-            title: "关于",
-            icon: "mdi-information",
-            to: { name: "About" }
-          }
+          sidebarRoutes.fav,
+          sidebarRoutes.history,
+          sidebarRoutes.chat,
+          sidebarRoutes.about
         ];
       } else {
-        return [];
+        return [sidebarRoutes.chat, sidebarRoutes.about];
       }
     }
   },
