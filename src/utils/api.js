@@ -1,6 +1,7 @@
 import axios from "../plugins/axios";
 import qs from "qs";
 import store from "../store";
+import { logDebug } from "../utils/others";
 
 export async function login(data) {
   return new Promise((resolve, reject) => {
@@ -12,7 +13,7 @@ export async function login(data) {
     axios
       .post("/users/login", qs.stringify(data), config)
       .then(resp => {
-        console.log("login result:", resp.data);
+        logDebug("login result:", resp.data);
         if (resp.data.success) {
           store.commit("setToken", resp.data.token);
           store.commit("setUser", resp.data.data);

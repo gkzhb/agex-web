@@ -21,10 +21,12 @@
   </v-snackbar>
 </template>
 <script>
+// import { logDebug } from "../utils/others";
 export default {
   name: "Message",
   data: () => ({
     show: false,
+    toShow: false, // show on next tick
     content: "",
     color: "",
     timeout: -1,
@@ -51,7 +53,7 @@ export default {
     // 添加显示消息
     addMessage(msg) {
       this.queue.push(msg);
-      if (!this.show && this.queue.length > 0) {
+      if (!this.toShow && !this.show && this.queue.length > 0) {
         this.showNext();
       }
     },
@@ -63,8 +65,10 @@ export default {
         this.color = msg.color;
         this.timeout = msg.timeout;
         this.show = false;
+        this.toShow = true;
         this.$nextTick(() => {
           this.show = true;
+          this.toShow = false;
         });
       }
     },

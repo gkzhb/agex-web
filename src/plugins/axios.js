@@ -4,6 +4,7 @@ import Vue from "vue";
 import axios from "axios";
 
 import { BASE_URL } from "../utils/config";
+import { logDebug } from "../utils/others";
 import store from "../store";
 
 // Full config:  https://github.com/axios/axios#request-config
@@ -24,7 +25,7 @@ const _axios = axios.create(config);
 _axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent
-    console.log(config);
+    logDebug(config);
     if (!config.url.endsWith("login")) {
       // config.data.token = localStorage.token;
       config.headers["Authorization"] = localStorage.token;
@@ -41,24 +42,33 @@ _axios.interceptors.request.use(
 _axios.interceptors.response.use(
   function(response) {
     // Do something with response data
-    console.log(response);
-    if (response.data.success === false && response.data.message) {
-      store.dispatch("message/error", response.data.message);
+    logDebug(response);
+    if (response.data.success === false) {
+      if (response.data.code == "999999") {
+        store.dispatch("logout");
+        store.dispatch("message/info", "登录超时，请重新登录！");
+      } else {
+        if (response.data.massage) {
+          // notice 'massage' typo from server response
+          logDebug("error in response");
+          store.dispatch("message/error", response.data.massage);
+        }
+      }
     }
     return response;
   },
   function(error) {
     // Do something with response error
-    console.log(error);
+    logDebug(error);
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          store.commit("logout");
-          store.dispatch("info", "登录超时，请重新登录！");
+          store.dispatch("logout");
+          store.dispatch("message/info", "登录超时，请重新登录！");
           break;
       }
       if (error.response.message) {
-        store.dispatch("error", error.response.message);
+        store.dispatch("message/error", error.response.message);
       }
     }
     return Promise.reject(error);

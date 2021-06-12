@@ -1,3 +1,5 @@
+import { logDebug } from "../utils/others";
+
 export default {
   namespaced: true,
   state: {
@@ -7,6 +9,7 @@ export default {
   },
   mutations: {
     showMessage(state, payload) {
+      logDebug("show message ");
       state.content = payload.content;
       state.color = payload.color;
       state.timeout = payload.timeout;
@@ -17,6 +20,7 @@ export default {
   },
   actions: {
     info({ commit }, content = "", color = "info", timeout = 4000) {
+      logDebug("message info");
       commit("showMessage", {
         content,
         color,

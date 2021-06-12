@@ -97,7 +97,6 @@ export default {
     ...mapActions(["logout"]),
     clickLogout() {
       this.logout();
-      this.$router.push({ name: "Login" });
     },
     setDarkMode() {
       this.dark = !this.dark;

@@ -1,4 +1,5 @@
 import dayjs from "../plugins/dayjs";
+import store from "../store";
 
 const today = dayjs().startOf("day");
 
@@ -12,4 +13,10 @@ export function fromNow(t) {
     return dt.format("dddd HH:mm:ss");
   }
   return dt.fromNow() + " " + dt.format("HH:mm:ss");
+}
+
+export function logDebug() {
+  if (store.getters.debugMode) {
+    console.log(...arguments);
+  }
 }

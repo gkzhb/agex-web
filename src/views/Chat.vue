@@ -79,9 +79,7 @@ export default {
       return fromNow(t);
     },
     toggleReplies(idx) {
-      console.log(idx, this.show[idx]);
       this.show[idx] = !this.show[idx];
-      console.log(idx, this.show[idx]);
     },
     submitTopic() {
       if (this.topicContent.trim().length > 0) {

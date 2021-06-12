@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import message from "./message.store";
+import router from "../router";
 
 Vue.use(Vuex);
 
@@ -8,7 +9,8 @@ export default new Vuex.Store({
   state: {
     user: {},
     token: "",
-    title: ""
+    title: "",
+    debug: undefined
   },
   getters: {
     loggedIn: state => {
@@ -28,6 +30,9 @@ export default new Vuex.Store({
     },
     darkMode: state => {
       return state.darkMode || localStorage.darkMode === "true";
+    },
+    debugMode: state => {
+      return state.debug || !!localStorage.debugMode;
     }
   },
   mutations: {
@@ -48,9 +53,12 @@ export default new Vuex.Store({
       state.token = "";
     },
     setDarkMode(state, dark) {
-      console.log("setDarkMode", dark);
       state.darkMode = dark;
       localStorage.darkMode = dark;
+    },
+    setDebugMode(state, debug) {
+      state.debug = debug;
+      localStorage.debug = debug ? "1" : "";
     }
   },
   actions: {
@@ -58,6 +66,7 @@ export default new Vuex.Store({
       localStorage.token = "";
       localStorage.userId = "";
       commit("setLogout");
+      router.push({ name: "Login" });
     }
   },
   modules: {

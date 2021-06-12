@@ -37,6 +37,7 @@
 </template>
 <script>
 import { login } from "../utils/api";
+import { logDebug } from "../utils/others";
 export default {
   data() {
     return {
@@ -53,12 +54,12 @@ export default {
       if (this.$refs.loginForm.validate()) {
         login(this.loginForm)
           .then(res => {
-            console.log("登录成功", res.message);
+            logDebug("登录成功", res.message);
             this.$store.dispatch("message/success", res.message);
             this.$router.push({ name: "Home" });
           })
           .catch(err => {
-            console.log("登录失败", err.message);
+            logDebug("登录失败", err.message);
           });
       }
     },
