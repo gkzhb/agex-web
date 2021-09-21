@@ -1,6 +1,16 @@
 <template>
   <v-list-item :key="topic.id">
     <v-list-item-content>
+      <div
+        class="mt-2 d-contents text-subtitle-1 font-weight-bold"
+        v-if="topic.Bangumi"
+      >
+        <a
+          class="pl-1 d-inline-block text-truncate max-full-width"
+          :href="detailUrl + topic.Bangumi.fanId"
+          ># {{ topic.Bangumi.name }}</a
+        >
+      </div>
       <div class="mt-2 chat_content" v-html="topic.content" />
       <div class="mt-2 text--secondary d-flex justify-space-between">
         <div class="d-flex align-center">
@@ -23,7 +33,7 @@
               hide-details
               outlined
               color="primary"
-              class="reply_input"
+              class="d-inline-block full-width"
             />
           </div>
           <v-btn class="ml-2 primary--text" text @click.stop="submitReply()"
@@ -33,20 +43,7 @@
         <v-list class="pl-4">
           <template v-for="(reply, i) in topic.Comments">
             <v-divider :key="'d' + i" />
-            <v-list-item :key="i">
-              <v-list-item-content>
-                <div class="chat_content" v-html="reply.content" />
-                <div class="mt-2 text--secondary d-flex justify-space-between">
-                  <div>
-                    <span class="mr-4" v-text="reply.userName" />
-                    <span v-text="toDate(reply.updatedAt)" />
-                  </div>
-                  <div>
-                    <span v-text="'#' + (i + 1)" />
-                  </div>
-                </div>
-              </v-list-item-content>
-            </v-list-item>
+            <a-reply :key="reply.id" :reply="reply" :index="i" />
           </template>
         </v-list>
       </div>
@@ -54,11 +51,16 @@
   </v-list-item>
 </template>
 <script>
+import { AGE_DETAIL_URL } from "../utils/config";
 import { fromNow } from "../utils/others";
 import { createReply } from "../utils/api";
+import AReply from "./AReply";
 
 export default {
   name: "ATopic",
+  components: {
+    AReply
+  },
   props: {
     topic: Object
   },
@@ -82,6 +84,11 @@ export default {
       }
     }
   },
+  computed: {
+    detailUrl() {
+      return AGE_DETAIL_URL;
+    }
+  },
   watch: {
     "topic.id"() {
       // hide replies when paging
@@ -90,8 +97,3 @@ export default {
   }
 };
 </script>
-<style lang="sass" scoped>
-.reply_input
-  width: 100%
-  display: inline-block
-</style>

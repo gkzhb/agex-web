@@ -106,3 +106,13 @@ export default {
   }
 };
 </script>
+<style lang="sass">
+.full-width
+  width: 100%
+.max-full-width
+  max-width: 100%
+.full-height
+  height: 100%
+.d-contents
+  display: contents
+</style>

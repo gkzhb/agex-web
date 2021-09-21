@@ -48,9 +48,3 @@ export default {
   }
 };
 </script>
-<style lang="sass" scoped>
-.full-width
-  width: 100%
-.full-height
-  height: 100%
-</style>
