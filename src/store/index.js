@@ -7,10 +7,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: {},
+    user: {
+      id: null,
+      username: null
+    },
     token: "",
     title: "",
-    debug: undefined
+    debug: undefined,
+    darkMode: null
   },
   getters: {
     loggedIn: state => {

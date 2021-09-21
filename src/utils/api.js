@@ -3,6 +3,7 @@ import qs from "qs";
 import store from "../store";
 import { logDebug } from "../utils/others";
 
+/** 登录 */
 export async function login(data) {
   return new Promise((resolve, reject) => {
     const config = {
@@ -26,6 +27,7 @@ export async function login(data) {
   });
 }
 
+/** 注册帐号 */
 export async function register(data) {
   return new Promise((resolve, reject) => {
     const config = {
@@ -42,6 +44,7 @@ export async function register(data) {
   });
 }
 
+/** 获取追番列表 */
 export async function getFavoriteList() {
   return new Promise((resolve, reject) => {
     axios
@@ -53,6 +56,7 @@ export async function getFavoriteList() {
   });
 }
 
+/** 获取观看历史记录 */
 export async function getHistoryList() {
   return new Promise((resolve, reject) => {
     axios
@@ -64,20 +68,7 @@ export async function getHistoryList() {
   });
 }
 
-export async function getChatTopicList(page = 1) {
-  return new Promise((resolve, reject) => {
-    axios
-      .post("/articles/list", {
-        userId: store.getters.userId,
-        currentPage: page
-      })
-      .then(resp => {
-        resolve(resp.data);
-      })
-      .catch(err => reject(err));
-  });
-}
-
+/** 发起回复 */
 export async function createReply(id, content) {
   return new Promise((resolve, reject) => {
     axios
@@ -94,6 +85,37 @@ export async function createReply(id, content) {
   });
 }
 
+/** 获取番剧的评论 */
+export async function getAnimeTopic(/* TODO */) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post("/articles/getArticles", {
+        userId: store.getters.userId
+        // TODO
+      })
+      .then(resp => {
+        resolve(resp.data);
+      })
+      .catch(err => reject(err));
+  });
+}
+
+/** 获取主题列表 */
+export async function getChatTopicList(page = 1) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post("/articles/list", {
+        userId: store.getters.userId,
+        currentPage: page
+      })
+      .then(resp => {
+        resolve(resp.data);
+      })
+      .catch(err => reject(err));
+  });
+}
+
+/** 新建主题 */
 export async function createTopic(content) {
   return new Promise((resolve, reject) => {
     axios

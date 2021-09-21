@@ -1,43 +1,35 @@
 <template>
   <v-container class="mb-12">
-    <v-row class="mt-2">
-      <v-col>
-        <h2>我的历史</h2>
-      </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col
-        v-for="item in hisList"
-        cols="12"
-        :key="item.id"
-        xs="12"
-        md="6"
-        lg="4"
-      >
-        <a-card :anime="item">
-          <div class="text-subtitle-1 text--secondary">
-            看到
-            <a :href="item.lastUrl + '&' + item.lastTime">{{
-              item.lastTime.indexOf("00") === 0
-                ? item.lastTime.substring(3)
-                : item.lastTime
-            }}</a>
-            | {{ toDate(item.updatedAt) }}
-          </div>
-          <template v-slot:actions>
-            <v-btn
-              text
-              color="primary"
-              v-if="item.lastTime"
-              v-text="'继续看' + item.lastPos"
-              :href="item.lastUrl + '&' + item.lastTime"
-              target="_blank"
-            />
-            <v-btn text disabled v-text="'更新到 ' + item.other" />
-          </template>
-        </a-card>
-      </v-col>
-    </v-row>
+    <h2 class="mt-2">我的历史</h2>
+    <div class="d-flex flex-wrap">
+      <a-card v-for="item in hisList" :key="item.id" :anime="item">
+        <div class="text-subtitle-2 text--secondary">
+          看到
+          <a :href="item.lastUrl + '&' + item.lastTime">{{
+            item.lastTime.indexOf("00") === 0
+              ? item.lastTime.substring(3)
+              : item.lastTime
+          }}</a>
+          | {{ toDate(item.updatedAt) }}
+        </div>
+        <template v-slot:actions>
+          <v-btn
+            text
+            color="primary"
+            class="text-truncate"
+            v-if="item.lastTime"
+            v-text="item.lastPos"
+            :href="item.lastUrl + '&' + item.lastTime"
+            target="_blank"
+            width="100"
+          />
+          <span
+            class="ml-2 text-caption text--secondary text-truncate"
+            v-text="'更新到 ' + item.other"
+          />
+        </template>
+      </a-card>
+    </div>
     <to-top-fab />
   </v-container>
 </template>

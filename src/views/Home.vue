@@ -1,40 +1,29 @@
 <template>
   <v-container class="mb-12">
-    <v-row class="mt-2">
-      <v-col>
-        <h2>我的追番</h2>
-      </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col
-        v-for="item in favList"
-        cols="12"
-        :key="item.id"
-        xs="12"
-        sm="6"
-        lg="4"
-      >
-        <a-card :anime="item.BangumiData">
-          <div
-            class="text--secondary"
-            v-text="item.BangumiData.region + ' | ' + item.BangumiData.state"
+    <h2 class="mt-2">我的追番</h2>
+    <v-container class="d-flex flex-wrap">
+      <a-card v-for="item in favList" :key="item.id" :anime="item.BangumiData">
+        <div
+          class="text--secondary"
+          v-text="item.BangumiData.region + ' | ' + item.BangumiData.state"
+        />
+        <div
+          class="text--primary des"
+          style="max-width: 100%"
+          v-text="item.BangumiData.description"
+        />
+        <template v-slot:actions>
+          <v-btn
+            text
+            color="primary"
+            v-if="item.lastTime"
+            v-text="'继续看' + item.lastPos"
+            :href="item.lastUrl + '&' + item.lastTime"
           />
-          <div
-            class="text--primary des"
-            v-text="item.BangumiData.description"
-          />
-          <template v-slot:actions>
-            <v-btn
-              text
-              color="primary"
-              v-if="item.lastTime"
-              v-text="'继续看' + item.lastPos"
-              :href="item.lastUrl + '&' + item.lastTime"
-            />
-          </template>
-        </a-card>
-      </v-col>
-    </v-row>
+          <v-btn text disabled v-else v-text="'未观看'" />
+        </template>
+      </a-card>
+    </v-container>
     <to-top-fab />
   </v-container>
 </template>
@@ -76,9 +65,8 @@ export default {
 <style lang="sass" scoped>
 .des
   display: -webkit-box
-  max-height: 7.125rem
   overflow: hidden
   text-overflow: ellipsis
-  -webkit-line-clamp: 2
+  -webkit-line-clamp: 3
   -webkit-box-orient: vertical
 </style>

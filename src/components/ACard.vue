@@ -1,30 +1,32 @@
 <template>
-  <v-card>
-    <v-row justify="space-between">
-      <v-col cols="4" class="d-flex align-center">
-        <a :href="detailUrl + anime.fanId" target="_blank" class="full_wid">
-          <v-img class="ma-3" width="100%" :src="anime.cover"></v-img>
+  <v-card max-width="350" height="190" class="ma-2">
+    <v-row class="full-height align-center ma-0">
+      <v-col cols="4" class="d-flex align-center pa-0">
+        <a
+          :href="detailUrl + anime.fanId"
+          target="_blank"
+          class="full-width px-2"
+        >
+          <v-img width="100%" :src="anime.cover"></v-img>
         </a>
       </v-col>
-      <v-col cols="8" class="pl-0 d-flex flex-column">
-        <div class="mb-auto">
-          <v-card-text>
-            <div>
-              <a
-                class="text-h6 anime_title_text"
-                :href="detailUrl + anime.fanId"
-                target="_blank"
-                >{{ anime.name }}</a
-              >
-            </div>
-            <slot></slot>
-          </v-card-text>
-        </div>
-        <div>
-          <v-card-actions>
-            <slot name="actions"></slot>
-          </v-card-actions>
-        </div>
+      <v-col
+        cols="8"
+        class="full-height pa-0 d-flex flex-column justify-space-between"
+      >
+        <v-card-text class="pb-0 pl-0">
+          <a
+            class="text-subtitle-1 font-weight-medium d-inline-block text-truncate"
+            :href="detailUrl + anime.fanId"
+            target="_blank"
+            style="max-width: 100%"
+            >{{ anime.name }}</a
+          >
+          <slot></slot>
+        </v-card-text>
+        <v-card-actions>
+          <slot name="actions"></slot>
+        </v-card-actions>
       </v-col>
     </v-row>
   </v-card>
@@ -47,12 +49,8 @@ export default {
 };
 </script>
 <style lang="sass" scoped>
-.full_wid
+.full-width
   width: 100%
-.anime_title_text
-  display: -webkit-box
-  overflow: hidden
-  text-overflow: ellipsis
-  -webkit-line-clamp: 1
-  -webkit-box-orient: vertical
+.full-height
+  height: 100%
 </style>
