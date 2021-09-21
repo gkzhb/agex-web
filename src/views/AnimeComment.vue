@@ -1,6 +1,6 @@
 <template>
   <v-container class="mb-12">
-    <v-dialog v-model="topicDialog" persistent>
+    <v-dialog v-model="commentDialog" persistent>
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" fab fixed bottom right v-on="on" v-bind="attrs">
           <v-icon>mdi-plus</v-icon>
@@ -8,12 +8,12 @@
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">新主题</span>
+          <span class="headline">新评论</span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-textarea
-              v-model="topicContent"
+              v-model="commentContent"
               label="内容"
               placeholder="阿巴阿巴~"
               rows="4"
@@ -26,33 +26,36 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary darken-1" text @click="submitTopic()"
+          <v-btn color="primary darken-1" text @click="submitComment()"
             >确定</v-btn
           >
-          <v-btn color="red darken-1" text @click="topicDialog = false"
+          <v-btn color="red darken-1" text @click="commentDialog = false"
             >取消</v-btn
           >
         </v-card-actions>
       </v-card>
     </v-dialog>
-
+    <h2 v-if="this.$route.query.animeName" class="mb-2">
+      <a :href="detailUrl + animeId">{{ this.$route.query.animeName }}</a>
+    </h2>
     <v-list>
-      <template v-for="(topic, idx) in chatList">
+      <template v-for="(comment, idx) in commentList">
         <v-divider :key="'d-' + idx" v-if="idx != 0" />
-        <a-topic :key="idx" :topic="topic" />
+        <a-topic :key="idx" :topic="comment" :showTopic="false" />
       </template>
     </v-list>
-    <div class="text-center my-4">
+    <!-- <div class="text-center my-4">
       <v-pagination v-model="page" :length="total" circle @input="changePage" />
-    </div>
+    </div> -->
     <to-top-fab :bottom="false" />
   </v-container>
 </template>
 <script>
-import { getChatTopicList, createTopic } from "../utils/api";
+import { AGE_DETAIL_URL } from "../utils/config";
 import { fromNow, logDebug } from "../utils/others";
 import ATopic from "../components/ATopic";
 import ToTopFab from "../components/ToTopFab";
+import { createTopic, getAnimeComments } from "../utils/api";
 
 export default {
   components: {
@@ -60,19 +63,19 @@ export default {
     ToTopFab
   },
   data: () => ({
-    topicDialog: false,
-    topicContent: "",
-    chatList: [],
+    commentDialog: false,
+    commentContent: "",
+    commentList: [],
     total: 0,
     page: 1
   }),
   methods: {
-    getChatTopics(page = 1) {
-      getChatTopicList(page).then(resp => {
-        this.chatList = resp.articles.rows;
-        this.total = Math.ceil(
+    getAnimeComments(page = 1) {
+      getAnimeComments(this.animeId, page).then(resp => {
+        this.commentList = resp.articles;
+        /* this.total = Math.ceil(
           resp.pagination.total / resp.pagination.pageSize
-        );
+        ); */
       });
     },
     toDate(t) {
@@ -81,34 +84,32 @@ export default {
     toggleReplies(idx) {
       this.show[idx] = !this.show[idx];
     },
-    submitTopic() {
-      if (this.topicContent.trim().length > 0) {
-        createTopic(this.topicContent).then(resp => {
-          this.$store.dispatch("message/success", "主题创建成功");
-          this.topicDialog = false;
+    submitComment() {
+      if (this.commentContent.trim().length > 0) {
+        createTopic(this.commentContent, this.animeId).then(resp => {
+          this.$store.dispatch("message/success", "评论成功");
+          this.commentDialog = false;
           logDebug(resp);
           this.$router.go();
         });
       } else {
-        this.$store.dispatch("message/error", "主题内容不能为空");
+        this.$store.dispatch("message/error", "评论内容不能为空");
       }
     },
     changePage(page) {
-      this.getChatTopics(page);
+      this.getAnimeComments(page);
+    }
+  },
+  computed: {
+    animeId() {
+      return this.$route.params.animeId;
+    },
+    detailUrl() {
+      return AGE_DETAIL_URL;
     }
   },
   created() {
-    this.getChatTopics();
+    this.getAnimeComments();
   }
 };
 </script>
-<style lang="sass">
-.chat_content img
-  max-width: 70% !important
-.chat_content
-  max-width: 100% !important
-  line-height: 1.5
-  word-break: break-all
-.chat_content iframe
-  max-width: 100% !important
-</style>

@@ -35,6 +35,16 @@ const routes = [
     }
   },
   {
+    path: "/comments/:animeId",
+    name: "Comments",
+    component: () =>
+      import(/* webpackChunkName: "comments" */ "../views/AnimeComment.vue"),
+    meta: {
+      title: "评论区",
+      auth: true
+    }
+  },
+  {
     path: "/login",
     name: "Login",
     component: () =>

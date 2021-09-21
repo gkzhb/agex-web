@@ -86,12 +86,11 @@ export async function createReply(id, content) {
 }
 
 /** 获取番剧的评论 */
-export async function getAnimeTopic(/* TODO */) {
+export async function getAnimeComments(id) {
   return new Promise((resolve, reject) => {
     axios
       .post("/articles/getArticles", {
-        userId: store.getters.userId
-        // TODO
+        fanId: id
       })
       .then(resp => {
         resolve(resp.data);
@@ -116,13 +115,14 @@ export async function getChatTopicList(page = 1) {
 }
 
 /** 新建主题 */
-export async function createTopic(content) {
+export async function createTopic(content, animeId) {
   return new Promise((resolve, reject) => {
     axios
       .post("/articles/create", {
         userId: store.getters.userId,
         userName: store.getters.username,
-        content: content
+        content: content,
+        pin: animeId
       })
       .then(resp => {
         resolve(resp.data);

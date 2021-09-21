@@ -3,11 +3,13 @@
     <v-list-item-content>
       <div
         class="mt-2 d-contents text-subtitle-1 font-weight-bold"
-        v-if="topic.Bangumi"
+        v-if="showTopic && topic.Bangumi"
       >
         <a
           class="pl-1 d-inline-block text-truncate max-full-width"
-          :href="detailUrl + topic.Bangumi.fanId"
+          :data-aid="topic.Bangumi.fanId"
+          :data-name="topic.Bangumi.name"
+          @click="goToCommentPage"
           ># {{ topic.Bangumi.name }}</a
         >
       </div>
@@ -52,7 +54,7 @@
 </template>
 <script>
 import { AGE_DETAIL_URL } from "../utils/config";
-import { fromNow } from "../utils/others";
+import { fromNow, logDebug } from "../utils/others";
 import { createReply } from "../utils/api";
 import AReply from "./AReply";
 
@@ -62,7 +64,11 @@ export default {
     AReply
   },
   props: {
-    topic: Object
+    topic: Object,
+    showTopic: {
+      type: Boolean,
+      default: true
+    }
   },
   data: () => ({
     showReply: false,
@@ -77,11 +83,20 @@ export default {
         createReply(this.topic.id, this.replyContent).then(resp => {
           this.replyContent = "";
           this.$store.dispatch("message/success", "回复成功");
-          this.topic.comments.push(resp);
+          logDebug(resp);
+          this.$router.go();
         });
       } else {
         this.$store.dispatch("message/error", "回复内容不能为空");
       }
+    },
+    goToCommentPage(event) {
+      const el = event.target;
+      this.$router.push({
+        name: "Comments",
+        params: { animeId: el.dataset.aid },
+        query: { animeName: el.dataset.name }
+      });
     }
   },
   computed: {

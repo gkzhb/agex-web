@@ -12,7 +12,7 @@ export function fromNow(t) {
   if (diff > 1) {
     return dt.format("dddd HH:mm");
   }
-  return dt.fromNow() + " " + dt.format("HH:mm");
+  return dt.fromNow();
 }
 
 export function logDebug() {
