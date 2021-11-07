@@ -19,7 +19,7 @@
             class="text-truncate"
             v-if="item.lastTime"
             v-text="item.lastPos"
-            :href="item.lastUrl + '&' + item.lastTime"
+            :href="getLastUrl(item.lastUrl, item.lastTime)"
             target="_blank"
             width="100"
           />
@@ -35,8 +35,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { getHistoryList } from "../utils/api";
-import { AGE_DETAIL_URL } from "../utils/config";
 import { fromNow } from "../utils/others";
 import ACard from "@/components/ACard";
 import ToTopFab from "../components/ToTopFab";
@@ -53,6 +53,9 @@ export default {
     };
   },
   methods: {
+    getDetailUrl(animeId) {
+      return new URL(animeId, this.ageDetailUrl);
+    },
     getHistory() {
       getHistoryList().then(resp => {
         this.hisList = resp;
@@ -60,12 +63,19 @@ export default {
     },
     toDate(t) {
       return fromNow(t);
+    },
+    getLastUrl(lastUrl, lastTime) {
+      let url;
+      if (/agefans/.test(lastUrl)) {
+        url = new URL(lastUrl);
+      } else {
+        url = new URL(lastUrl, this.ageBaseUrl);
+      }
+      return `${url.toString()}&${lastTime}`;
     }
   },
   computed: {
-    detailUrl() {
-      return AGE_DETAIL_URL;
-    }
+    ...mapGetters({ ageBaseUrl: "config/ageBaseUrl" })
   },
   created() {
     this.getHistory();

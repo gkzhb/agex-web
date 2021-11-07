@@ -14,9 +14,18 @@ export const sidebarRoutes = {
     icon: "mdi-chat-processing",
     to: { name: "Chat" }
   },
+  settings: {
+    title: "设置",
+    icon: "mdi-cog",
+    to: { name: "Settings" }
+  },
   about: {
     title: "关于",
     icon: "mdi-information",
     to: { name: "About" }
   }
 };
+
+export const BASE_URL = process.env.VUE_APP_BASE_API;
+export const AGE_BASE_URL = "https://www.agefans.vip/";
+export const AGE_DETAIL_PATH = "detail/";

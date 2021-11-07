@@ -43,7 +43,7 @@
           >
         </div>
         <v-list class="pl-4">
-          <template v-for="(reply, i) in topic.Comments">
+          <template v-for="(reply, i) in sortedComments">
             <v-divider :key="'d' + i" />
             <a-reply :key="reply.id" :reply="reply" :index="i" />
           </template>
@@ -53,7 +53,7 @@
   </v-list-item>
 </template>
 <script>
-import { AGE_DETAIL_URL } from "../utils/config";
+import _ from "lodash";
 import { fromNow, logDebug } from "../utils/others";
 import { createReply } from "../utils/api";
 import AReply from "./AReply";
@@ -100,8 +100,10 @@ export default {
     }
   },
   computed: {
-    detailUrl() {
-      return AGE_DETAIL_URL;
+    sortedComments() {
+      return this.topic.Comments
+        ? _.orderBy(this.topic.Comments, "createdAt")
+        : [];
     }
   },
   watch: {

@@ -30,7 +30,6 @@
 
 <script>
 import { getFavoriteList } from "../utils/api";
-import { AGE_DETAIL_URL } from "../utils/config";
 import ACard from "@/components/ACard";
 import ToTopFab from "../components/ToTopFab";
 
@@ -46,15 +45,13 @@ export default {
     };
   },
   methods: {
+    getDetailUrl(animeId) {
+      return new URL(animeId, this.ageDetailUrl);
+    },
     getFavs() {
       getFavoriteList().then(resp => {
         this.favList = resp;
       });
-    }
-  },
-  computed: {
-    detailUrl() {
-      return AGE_DETAIL_URL;
     }
   },
   created() {

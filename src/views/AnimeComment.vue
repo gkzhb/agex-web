@@ -8,7 +8,7 @@
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">新评论</span>
+          <span class="headline">新留言</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -36,7 +36,7 @@
       </v-card>
     </v-dialog>
     <h2 v-if="this.$route.query.animeName" class="mb-2">
-      <a :href="detailUrl + animeId">{{ this.$route.query.animeName }}</a>
+      <a :href="getDetailUrl(animeId)">{{ this.$route.query.animeName }}</a>
     </h2>
     <v-list>
       <template v-for="(comment, idx) in commentList">
@@ -51,7 +51,7 @@
   </v-container>
 </template>
 <script>
-import { AGE_DETAIL_URL } from "../utils/config";
+import { mapGetters } from "vuex";
 import { fromNow, logDebug } from "../utils/others";
 import ATopic from "../components/ATopic";
 import ToTopFab from "../components/ToTopFab";
@@ -70,6 +70,9 @@ export default {
     page: 1
   }),
   methods: {
+    getDetailUrl(animeId) {
+      return new URL(animeId, this.ageDetailUrl);
+    },
     getAnimeComments(page = 1) {
       getAnimeComments(this.animeId, page).then(resp => {
         this.commentList = resp.articles;
@@ -87,13 +90,13 @@ export default {
     submitComment() {
       if (this.commentContent.trim().length > 0) {
         createTopic(this.commentContent, this.animeId).then(resp => {
-          this.$store.dispatch("message/success", "评论成功");
+          this.$store.dispatch("message/success", "留言成功");
           this.commentDialog = false;
           logDebug(resp);
           this.$router.go();
         });
       } else {
-        this.$store.dispatch("message/error", "评论内容不能为空");
+        this.$store.dispatch("message/error", "留言内容不能为空");
       }
     },
     changePage(page) {
@@ -101,11 +104,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({ ageDetailUrl: "config/ageDetailUrl" }),
     animeId() {
       return this.$route.params.animeId;
-    },
-    detailUrl() {
-      return AGE_DETAIL_URL;
     }
   },
   created() {

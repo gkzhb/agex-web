@@ -40,8 +40,17 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "comments" */ "../views/AnimeComment.vue"),
     meta: {
-      title: "评论区",
+      title: "留言区",
       auth: true
+    }
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/Settings.vue"),
+    meta: {
+      title: "设置"
     }
   },
   {

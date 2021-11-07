@@ -8,7 +8,7 @@
         <v-icon>mdi-github</v-icon>
       </v-btn>
       <v-btn icon @click="setDarkMode()">
-        <v-icon v-text="dark ? 'mdi-power-sleep' : 'mdi-weather-sunny'" />
+        <v-icon v-text="darkMode ? 'mdi-power-sleep' : 'mdi-weather-sunny'" />
       </v-btn>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" app temporary>
@@ -26,20 +26,20 @@
             </v-list-item-icon>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
-          <v-list-item :key="2" v-if="loggedIn" @click="clickLogout">
+          <v-list-item v-if="loggedIn" @click="clickLogout">
             <v-list-item-icon>
               <v-icon>mdi-account-arrow-right</v-icon>
             </v-list-item-icon>
             <v-list-item-title>登出</v-list-item-title>
           </v-list-item>
           <template v-else>
-            <v-list-item :key="3" :to="{ name: 'Login' }">
+            <v-list-item :to="{ name: 'Login' }">
               <v-list-item-icon>
                 <v-icon>mdi-account</v-icon>
               </v-list-item-icon>
               <v-list-item-title>登录</v-list-item-title>
             </v-list-item>
-            <v-list-item :key="4" :to="{ name: 'Register' }">
+            <v-list-item :to="{ name: 'Register' }">
               <v-list-item-icon>
                 <v-icon>mdi-account-plus</v-icon>
               </v-list-item-icon>
@@ -69,27 +69,31 @@ export default {
   },
   data: () => ({
     drawer: false,
-    group: 0,
-    dark: false
+    group: 0
   }),
   created() {
-    this.dark = this.darkMode;
     this.$vuetify.theme.dark = this.darkMode;
     Vue.prototype.$message = this.$refs.message;
   },
   computed: {
     ...mapState(["title"]),
-    ...mapGetters(["loggedIn", "darkMode", "username"]),
+    ...mapGetters(["loggedIn", "username"]),
+    ...mapGetters("config", ["darkMode"]),
     navList() {
       if (this.loggedIn) {
         return [
           sidebarRoutes.fav,
           sidebarRoutes.history,
           sidebarRoutes.chat,
+          sidebarRoutes.settings,
           sidebarRoutes.about
         ];
       } else {
-        return [sidebarRoutes.chat, sidebarRoutes.about];
+        return [
+          sidebarRoutes.settings,
+          sidebarRoutes.chat,
+          sidebarRoutes.about
+        ];
       }
     }
   },
@@ -101,7 +105,7 @@ export default {
     setDarkMode() {
       this.dark = !this.dark;
       this.$vuetify.theme.dark = this.dark;
-      this.$store.commit("setDarkMode", this.dark);
+      this.$store.commit("config/setDarkMode", this.dark);
     }
   }
 };

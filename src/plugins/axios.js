@@ -3,7 +3,7 @@
 import Vue from "vue";
 import axios from "axios";
 
-import { BASE_URL } from "../utils/config";
+import { BASE_URL } from "../utils/constant";
 import { logDebug } from "../utils/others";
 import store from "../store";
 

@@ -3,7 +3,7 @@
     <v-row class="full-height align-center ma-0">
       <v-col cols="4" class="d-flex align-center pa-0">
         <a
-          :href="detailUrl + anime.fanId"
+          :href="getDetailUrl(anime.fanId)"
           target="_blank"
           class="full-width px-2"
         >
@@ -17,7 +17,7 @@
         <v-card-text class="pb-0 pl-0">
           <a
             class="text-subtitle-1 font-weight-medium d-inline-block text-truncate"
-            :href="detailUrl + anime.fanId"
+            :href="getDetailUrl(anime.fanId)"
             target="_blank"
             style="max-width: 100%"
             >{{ anime.name }}</a
@@ -32,7 +32,7 @@
   </v-card>
 </template>
 <script>
-import { AGE_DETAIL_URL } from "../utils/config";
+import { mapGetters } from "vuex";
 
 export default {
   name: "ACard",
@@ -42,8 +42,11 @@ export default {
   },
   data: () => ({}),
   computed: {
-    detailUrl() {
-      return AGE_DETAIL_URL;
+    ...mapGetters({ ageDetailUrl: "config/ageDetailUrl" })
+  },
+  methods: {
+    getDetailUrl(animeId) {
+      return new URL(animeId, this.ageDetailUrl);
     }
   }
 };
