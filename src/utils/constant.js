@@ -29,3 +29,5 @@ export const sidebarRoutes = {
 export const BASE_URL = process.env.VUE_APP_BASE_API;
 export const AGE_BASE_URL = "https://www.agefans.vip/";
 export const AGE_DETAIL_PATH = "detail/";
+export const BANGUMI_URL = "https://bangumi.tv/";
+export const BANGUMI_SEARCH_PATH = "subject_search/";

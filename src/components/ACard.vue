@@ -15,13 +15,22 @@
         class="full-height pa-0 d-flex flex-column justify-space-between"
       >
         <v-card-text class="pb-0 pl-0">
-          <a
-            class="text-subtitle-1 font-weight-medium d-inline-block text-truncate"
-            :href="getDetailUrl(anime.fanId)"
-            target="_blank"
-            style="max-width: 100%"
-            >{{ anime.name }}</a
-          >
+          <div class="d-flex">
+            <a
+              class="text-subtitle-1 font-weight-medium d-inline-block text-truncate"
+              :href="getDetailUrl(anime.fanId)"
+              target="_blank"
+              style="max-width: 80%"
+              >{{ anime.name }}</a
+            >
+            <a
+              class="text-subtitle-2 ml-auto"
+              :data-aid="anime.fanId"
+              :data-name="anime.name"
+              @click="goToCommentPage"
+              >留言</a
+            >
+          </div>
           <slot></slot>
         </v-card-text>
         <v-card-actions>
@@ -47,6 +56,14 @@ export default {
   methods: {
     getDetailUrl(animeId) {
       return new URL(animeId, this.ageDetailUrl);
+    },
+    goToCommentPage(event) {
+      const el = event.target;
+      this.$router.push({
+        name: "Comments",
+        params: { animeId: el.dataset.aid },
+        query: { animeName: el.dataset.name }
+      });
     }
   }
 };

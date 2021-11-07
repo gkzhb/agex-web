@@ -35,14 +35,27 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <h2 v-if="this.$route.query.animeName" class="mb-2">
-      <a :href="getDetailUrl(animeId)">{{ this.$route.query.animeName }}</a>
+    <h2 v-if="this.$route.query.animeName" class="mb-2 d-flex">
+      <a :href="getDetailUrl(animeId)" target="_blank">{{
+        this.$route.query.animeName
+      }}</a>
+      <a
+        class="text-subtitle-2 ml-auto align-self-end"
+        :href="bangumiSearchUrl"
+        target="_blank"
+        >bangumi评论</a
+      >
     </h2>
     <v-list>
       <template v-for="(comment, idx) in commentList">
         <v-divider :key="'d-' + idx" v-if="idx != 0" />
         <a-topic :key="idx" :topic="comment" :showTopic="false" />
       </template>
+      <v-list-item v-if="commentList.length === 0">
+        <div class="text--disabled empty-comment">
+          暂无留言
+        </div>
+      </v-list-item>
     </v-list>
     <!-- <div class="text-center my-4">
       <v-pagination v-model="page" :length="total" circle @input="changePage" />
@@ -56,6 +69,7 @@ import { fromNow, logDebug } from "../utils/others";
 import ATopic from "../components/ATopic";
 import ToTopFab from "../components/ToTopFab";
 import { createTopic, getAnimeComments } from "../utils/api";
+import { BANGUMI_SEARCH_PATH, BANGUMI_URL } from "../utils/constant";
 
 export default {
   components: {
@@ -107,6 +121,14 @@ export default {
     ...mapGetters({ ageDetailUrl: "config/ageDetailUrl" }),
     animeId() {
       return this.$route.params.animeId;
+    },
+    bangumiSearchUrl() {
+      const url = new URL(
+        `${BANGUMI_SEARCH_PATH}${this.$route.query.animeName}`,
+        BANGUMI_URL
+      );
+      url.searchParams.append("cat", 2);
+      return url;
     }
   },
   created() {
@@ -114,3 +136,9 @@ export default {
   }
 };
 </script>
+<style lang="sass" scoped>
+.empty-comment
+  text-align: center
+  width: 100%
+  user-select: none
+</style>
