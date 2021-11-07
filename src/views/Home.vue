@@ -18,7 +18,7 @@
             color="primary"
             v-if="item.lastTime"
             v-text="'继续看' + item.lastPos"
-            :href="item.lastUrl + '&' + item.lastTime"
+            :href="getLastUrl(item.lastUrl, item.lastTime)"
           />
           <v-btn text disabled v-else v-text="'未观看'" />
         </template>
@@ -29,9 +29,11 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { getFavoriteList } from "../utils/api";
 import ACard from "@/components/ACard";
 import ToTopFab from "../components/ToTopFab";
+import { getLastUrl } from "../utils/others";
 
 export default {
   name: "Home",
@@ -44,9 +46,15 @@ export default {
       favList: []
     };
   },
+  computed: {
+    ...mapGetters({ ageBaseUrl: "config/ageBaseUrl" })
+  },
   methods: {
     getDetailUrl(animeId) {
       return new URL(animeId, this.ageDetailUrl);
+    },
+    getLastUrl(lastUrl, lastTime) {
+      return getLastUrl(this.ageBaseUrl, lastUrl, lastTime);
     },
     getFavs() {
       getFavoriteList().then(resp => {

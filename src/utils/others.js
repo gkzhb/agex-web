@@ -20,3 +20,24 @@ export function logDebug() {
     console.log(...arguments);
   }
 }
+
+export function getLastUrl(ageBaseUrl, lastUrl, lastTime) {
+  if (!lastTime || !lastUrl) {
+    return "";
+  }
+  let url;
+  if (/agefans/.test(lastUrl)) {
+    try {
+      url = new URL(lastUrl);
+      // replace base URL provided by server
+      const tempUrl = new URL(ageBaseUrl);
+      url.host = tempUrl.host;
+    } catch (e) {
+      console.error(e);
+      url = new URL(lastUrl, ageBaseUrl);
+    }
+  } else {
+    url = new URL(lastUrl, ageBaseUrl);
+  }
+  return `${url.toString()}&${lastTime}`;
+}

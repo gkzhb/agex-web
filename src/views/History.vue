@@ -5,7 +5,7 @@
       <a-card v-for="item in hisList" :key="item.id" :anime="item">
         <div class="text-subtitle-2 text--secondary">
           看到
-          <a :href="item.lastUrl + '&' + item.lastTime">{{
+          <a :href="getLastUrl(item.lastUrl, item.lastTime)">{{
             item.lastTime.indexOf("00") === 0
               ? item.lastTime.substring(3)
               : item.lastTime
@@ -37,7 +37,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { getHistoryList } from "../utils/api";
-import { fromNow } from "../utils/others";
+import { fromNow, getLastUrl } from "../utils/others";
 import ACard from "@/components/ACard";
 import ToTopFab from "../components/ToTopFab";
 
@@ -65,13 +65,7 @@ export default {
       return fromNow(t);
     },
     getLastUrl(lastUrl, lastTime) {
-      let url;
-      if (/agefans/.test(lastUrl)) {
-        url = new URL(lastUrl);
-      } else {
-        url = new URL(lastUrl, this.ageBaseUrl);
-      }
-      return `${url.toString()}&${lastTime}`;
+      return getLastUrl(this.ageBaseUrl, lastUrl, lastTime);
     }
   },
   computed: {
