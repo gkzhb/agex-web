@@ -10,9 +10,9 @@
 
 项目使用 Vue.js, Vuetify.js, axios 等，托管于 GitHub Pages。
 
-链接：[http://agex.gkzhb.tk](http://agex.gkzhb.tk) 
+链接：[https://agex.gkzhb.tk](https://agex.gkzhb.tk)
 
-> 因为服务端使用 HTTP 而非 HTTPS，所以网页也必须用 HTTP 访问，否则浏览器会阻止不安全的 HTTP 请求。
+> **更新**：服务端已更新使用 HTTPS 协议，网页端建议大家也使用 HTTPS 访问
 
 ## Project setup
 ```
