@@ -15,7 +15,7 @@ jobs:
     - uses: borales/actions-yarn@v2.0.0
       with:
         cmd: install
-    - run: echo 'agex.gkzhb.tk' > public/CNAME
+    - run: echo 'agex.gkzhb.top' > public/CNAME
     - uses: borales/actions-yarn@v2.0.0
       with:
         cmd: build
